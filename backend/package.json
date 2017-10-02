@@ -2,16 +2,26 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "backpack"
+    "dev": "backpack dev",
+    "start": "node ./build/main.js",
+    "prestart": "run-s build",
+    "build": "backpack build",
+    "prettier": "prettier --write 'src/**/*.js' 'index.*.js'"
   },
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "0.15.3",
     "backpack-core": "^0.2.0",
-    "express": "^4.15.2"
+    "body-parser": "1.18.2",
+    "dotenv": "4.0.0",
+    "express": "^4.15.2",
+    "express-async-await": "1.0.1",
+    "log4js": "2.3.4"
   },
-  "author": "",
+  "devDependencies": {
+    "npm-run-all": "4.1.1",
+    "prettier": "1.7.3"
+  },
   "license": "ISC"
 }
