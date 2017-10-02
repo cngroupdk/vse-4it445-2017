@@ -8,7 +8,9 @@
     "start": "node ./build/main.js",
     "prestart": "run-s build",
     "build": "backpack build",
-    "prettier": "prettier --write 'src/**/*.js' 'index.*.js'"
+    "build:watch": "nodemon --watch ./src --exec 'npm run build'",
+    "postbuild": "nodetouch tmp/restart.txt",
+    "prettier": "prettier --write 'src/**/*.js'"
   },
   "dependencies": {
     "axios": "0.15.3",
@@ -20,8 +22,10 @@
     "log4js": "1.1.1"
   },
   "devDependencies": {
+    "nodemon": "1.12.1",
     "npm-run-all": "4.1.1",
-    "prettier": "1.7.3"
+    "prettier": "1.7.3",
+    "touch": "3.1.0"
   },
   "license": "ISC"
 }

@@ -11,10 +11,4 @@ export const setupLogging = () => {
     ],
     replaceConsole: true,
   });
-
-  // const logger = log4js.getLogger('default');
-  // console.info = logger.info.bind(logger);
-  // console.log = logger.info.bind(logger);
-  // console.warn = logger.warn.bind(logger);
-  // console.error = logger.error.bind(logger);
 };
