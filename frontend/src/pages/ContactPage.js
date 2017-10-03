@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { API_URL } from '../constants';
 
 import { ContactListItem } from '../components/ContactList/ContactListItem';
 
@@ -14,15 +15,15 @@ export class ContactPage extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://dev.backend.USERNAME.vse.handson.pro//contacts/department?q=sales`)
+    axios.get(`${API_URL}/contacts/department?q=sales`)
       .then(res => {
         const { contacts } = res.data || [];
-        this.setState({ salesContacts: contacts })
+        this.setState({ salesContacts: contacts });
       });
-    axios.get(`http://dev.backend.USERNAME.vse.handson.pro/contacts/department?q=marketing`)
+    axios.get(`${API_URL}/contacts/department?q=marketing`)
       .then(res => {
         const { contacts } = res.data || [];
-        this.setState({ marketingContacts: contacts })
+        this.setState({ marketingContacts: contacts });
       });
   }
 

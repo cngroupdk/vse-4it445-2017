@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { API_URL } from '../constants';
 
 export class ContactDetail extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export class ContactDetail extends React.Component {
 
   componentDidMount() {
     const { contactId } = this.props.params;
-    axios.get(`http://dev.backend.USERNAME.vse.handson.pro/contacts/id?q=${contactId}`)
+    axios.get(`${API_URL}/contacts/id?q=${contactId}`)
       .then(res => {
         const { contacts } = res.data || [];
         this.setState({ contacts })
