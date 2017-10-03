@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import { ContactListItem } from '../components/ContactList/ContactListItem';
 
-const people = {
-  sales: [
-    {
-      id: 1,
-      name: 'Karel Karamel',
-      email: 'karamel@example.com',
-    },
-    {
-      id: 2,
-      name: 'Ota Lopata',
-      email: 'lopata@example.com',
-    }
-  ],
-  marketing: [
-    {
-      id: 3,
-      name: 'Karel Karamel',
-      email: 'karamel@example.com',
-    },
-  ],
-};
-
-
 export class ContactPage extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      salesContacts: [],
+      marketingContacts: [],
+    };
+  }
+
+  componentDidMount() {
+    axios.get(`http://dev.backend.USERNAME.vse.handson.pro//contacts/department?q=sales`)
+      .then(res => {
+        const { contacts } = res.data || [];
+        this.setState({ salesContacts: contacts })
+      });
+    axios.get(`http://dev.backend.USERNAME.vse.handson.pro/contacts/department?q=marketing`)
+      .then(res => {
+        const { contacts } = res.data || [];
+        this.setState({ marketingContacts: contacts })
+      });
+  }
+
   render() {
+    const { salesContacts, marketingContacts } = this.state;
     return (
       <div>
         <div className="jumbotron">
@@ -33,14 +35,14 @@ export class ContactPage extends Component {
         </div>
         <div>
           <h3>Sales</h3>
-          {people.sales.map(person =>
-            <ContactListItem person={person} key={person.email}/>
+          {salesContacts.map(person =>
+            <ContactListItem person={person} key={person.id}/>
           )}
         </div>
         <div>
           <h3>Marketing</h3>
-          {people.marketing.map(person =>
-            <ContactListItem person={person} key={person.email}/>
+          {marketingContacts.map(person =>
+            <ContactListItem person={person} key={person.id}/>
           )}
         </div>
         <div>
