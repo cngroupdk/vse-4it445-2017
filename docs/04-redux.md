@@ -6,6 +6,7 @@ git fetch --all
 git reset --hard cngroup/practical-04
 cd frontend
 npm install
+touch tmp/restart.txt
 cd ../backend
 npm run build:watch
 ```
