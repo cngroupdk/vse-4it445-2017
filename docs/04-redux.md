@@ -10,6 +10,9 @@ touch tmp/restart.txt
 cd ../backend
 npm run build:watch
 ```
+
+Change your API URL in `frontend/src/api.js`
+
 ## New packages
 Redux
 
