@@ -9,8 +9,17 @@ npm install
 cd ../backend
 npm run build:watch
 ```
-## new packages
+## New packages
 Redux
+
+## Comparison
+![comparison](https://cdn.css-tricks.com/wp-content/uploads/2016/03/redux-article-3-03.svg)
+
+## Workflow
+![loop](http://www.theodo.fr/uploads/blog//2016/03/ui_workflow.png)
+
+## Reducer
+![reducer](http://blog.krawaller.se/img/redux-reducer.png)
 
 # Docs
 
