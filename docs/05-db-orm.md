@@ -1,71 +1,29 @@
-# 4th Practical Class: DB and ORM
+# 5th Practical Class: DB and ORM
 
 # Docs
 
-- [LoopBack docs](http://apidocs.strongloop.com/)
+- [Sequelize docs](http://docs.sequelizejs.com/)
 
-# Setup
-
-`model-config.json`:
-
-```json
-  "EshopProduct": {
-    "dataSource": "mysqlds",
-    "public": true
-  }
-}
+# Install
+```bash
+git fetch --all
+git reset --hard cngroup/practical-05
+cd backend
+npm install
 ```
 
-`datasources.json`:
+# Config
+1. In `backend/src/config/` rename `config.js.example` to `config.js`
+2. In both `development` and `production`: fill out your MySQL user, password and database
 
-```json
-{
-  "db": {
-    "name": "db",
-    "connector": "memory"
-  },
-  "mysqlds": {
-    "name": "mysqlds",
-    "connector": "mysql",
-    "host": "localhost",
-    "port": 3306,
-    "database": "__DB__",
-    "username": "__USER__",
-    "password": "__PASS__"
-  }
-}
+# Create tables + seed
+```bash
+cd backend
+./node_modules/.bin/sequelize db:migrate
+./node_modules/.bin/sequelize db:seed:all --debug
 ```
 
-
-`boot/create-sample-products.js`:
-
-```js
-module.exports = function(app) {
-  app.dataSources.mysqlds.autoupdate('EshopProduct', function(err) {
-    const { EshopProduct } = app.models;
-    if (!EshopProduct) { return; }
-
-    EshopProduct.create([
-        {
-          title: 'Škoda Superb',
-          price: 750000,
-          shortInfo: 'Luxury car produced in the Czech Republic.',
-        },
-        {
-          title: 'Ford Focus',
-          price: 600000,
-          shortInfo: 'Sports car made in USA.',
-        },
-        {
-          title: 'Moped',
-          price: 1000,
-          shortInfo: 'No comment.',
-        },
-    ], function(err, products) {
-      if (err) throw err;
-
-      console.log('Models created: \n', products);
-    });
-  });
-};
+# Run `build:watch`
+```bash
+npm run build:watch
 ```
