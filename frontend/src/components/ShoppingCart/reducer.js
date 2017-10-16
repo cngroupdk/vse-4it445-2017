@@ -1,4 +1,4 @@
-import { ADD_PRODUCT_TO_CART } from '../actions/shoppingCart';
+import { SHOPPING_CART_ADD_PRODUCT } from './actions';
 
 const initialState = {
   items: [],
@@ -6,7 +6,7 @@ const initialState = {
 
 export const shoppingCartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_PRODUCT_TO_CART: {
+    case SHOPPING_CART_ADD_PRODUCT: {
       const { product } = action.payload;
 
       return {

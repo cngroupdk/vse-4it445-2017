@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addProductToCart } from '../../actions/shoppingCart';
+import { addProductToCart } from './actions';
 
 export class AddProductToCartButtonRaw extends Component {
   render() {
@@ -31,5 +31,5 @@ const mapDispatchToProps = {
 
 export const AddProductToCartButton = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(AddProductToCartButtonRaw);

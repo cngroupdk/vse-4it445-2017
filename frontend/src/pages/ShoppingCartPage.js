@@ -1,29 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { ShoppingCart } from '../components/ShoppingCart/ShoppingCart';
+
 export class ShoppingCartPageRaw extends Component {
   render() {
-    const { shoppingCartItems } = this.props;
+    const { items } = this.props;
 
-    return (
-      <div>
-        <div className="jumbotron">
-          <h1>Shopping Cart</h1>
-        </div>
-        {shoppingCartItems.map(item => (
-          <div key={item.product.id}>
-            <h3>
-              {item.count}&times; {item.product.title}
-            </h3>
-          </div>
-        ))}
-      </div>
-    );
+    return <ShoppingCart items={items} />;
   }
 }
 
 const mapStateToProps = state => ({
-  shoppingCartItems: state.shoppingCart.items,
+  items: state.shoppingCart.items,
 });
 
 export const ShoppingCartPage = connect(mapStateToProps)(ShoppingCartPageRaw);

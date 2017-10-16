@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { dummyReducer } from './dummy';
-import { shoppingCartReducer } from './shoppingCart';
+import { shoppingCartReducer } from '../components/ShoppingCart/reducer';
 
 export const rootReducer = combineReducers({
-  dummy: dummyReducer,
   shoppingCart: shoppingCartReducer,
 });
