@@ -12,7 +12,11 @@ cd backend
 npm install
 ```
 
-# Config
+# Config frontend
+1. In `frontend` rename `.env.example` to `.env` and open it
+2. Set correct API URL
+
+# Config backend
 1. In `backend/src/config/` rename `config.js.example` to `config.js`
 2. In both `development` and `production`: fill out your MySQL user, password and database
 
