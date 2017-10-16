@@ -14,3 +14,6 @@ npm-debug.log
 
 # custom
 /tmp
+
+# dotenv
+.env
