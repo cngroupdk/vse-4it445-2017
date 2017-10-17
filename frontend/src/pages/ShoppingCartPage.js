@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { ShoppingCart } from '../components/ShoppingCart/ShoppingCart';
+import { removeProductFromCart } from '../components/ShoppingCart/actions';
 
 export class ShoppingCartPageRaw extends Component {
-  render() {
-    const { items } = this.props;
+  static propTypes = {
+    items: PropTypes.array.isRequired,
+    removeProductFromCart: PropTypes.func.isRequired,
+  };
 
-    return <ShoppingCart items={items} />;
+  render() {
+    const { items, removeProductFromCart } = this.props;
+
+    return (
+      <ShoppingCart
+        items={items}
+        onRemoveProductFromCart={removeProductFromCart}
+      />
+    );
   }
 }
 
@@ -15,4 +27,10 @@ const mapStateToProps = state => ({
   items: state.shoppingCart.items,
 });
 
-export const ShoppingCartPage = connect(mapStateToProps)(ShoppingCartPageRaw);
+const mapDispatchToProps = {
+  removeProductFromCart,
+};
+
+export const ShoppingCartPage = connect(mapStateToProps, mapDispatchToProps)(
+  ShoppingCartPageRaw,
+);
