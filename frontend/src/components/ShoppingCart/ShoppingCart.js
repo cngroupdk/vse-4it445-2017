@@ -4,7 +4,7 @@ import { CartItem } from './CartItem';
 
 export class ShoppingCart extends Component {
   render() {
-    const { items } = this.props;
+    const { items, onRemoveProductFromCart } = this.props;
 
     return (
       <div>
@@ -17,6 +17,7 @@ export class ShoppingCart extends Component {
             key={item.product.id}
             product={item.product}
             count={item.count}
+            onRemoveProductFromCart={onRemoveProductFromCart}
           />
         ))}
       </div>

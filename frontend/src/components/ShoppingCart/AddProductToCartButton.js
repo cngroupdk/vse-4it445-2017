@@ -31,5 +31,5 @@ const mapDispatchToProps = {
 
 export const AddProductToCartButton = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(AddProductToCartButtonRaw);
