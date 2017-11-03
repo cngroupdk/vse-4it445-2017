@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import api from '../api.js';
 import { ProductList } from '../components/ProductList/ProductList.js';
+import { startProductListFetch } from '../components/ProductList/actions';
 
-export class ProductsPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      products: [],
-    };
-  }
-
+class ProductsPage extends Component {
   componentDidMount() {
-    api('products/').then(res => {
-      const { products } = res.data;
-      this.setState({ products });
-    });
+    const { startProductListFetch } = this.props;
+    startProductListFetch();
   }
 
   render() {
-    const { products } = this.state;
+    const { isLoading, products, error } = this.props;
+
+    if (isLoading) {
+      return (
+        <div>
+          <h2>Loading...</h2>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div>
+          <h2>Error</h2>
+          <div>{`${error}`}</div>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -32,3 +40,27 @@ export class ProductsPage extends Component {
     );
   }
 }
+
+const mapStateToProps = (storeState) => {
+  const { productList } = storeState;
+  const {
+    isLoading,
+    products,
+    error,
+  } = productList;
+
+  return {
+    isLoading,
+    products,
+    error,
+  };
+};
+
+const ProductsPageContainer = connect(
+  mapStateToProps,
+  {
+    startProductListFetch,
+  }
+)(ProductsPage);
+
+export default ProductsPageContainer;
