@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import LoadingIndicator from '../components/common/LoadingIndicator';
+import ErrorMessage from '../components/common/ErrorMessage';
 import { ProductList } from '../components/ProductList/ProductList.js';
 import { startProductListFetch } from '../components/ProductList/actions';
+import {
+  getProductListState,
+  isLoading,
+  isLoaded,
+  isError,
+  getError,
+  getProducts,
+} from '../components/ProductList/reducer';
 
 class ProductsPage extends Component {
   componentDidMount() {
@@ -11,23 +21,14 @@ class ProductsPage extends Component {
   }
 
   render() {
-    const { isLoading, products, error } = this.props;
+    const { isLoading, isLoaded, isError, products, error } = this.props;
 
-    if (isLoading) {
-      return (
-        <div>
-          <h2>Loading...</h2>
-        </div>
-      );
+    if (isError && !isLoading) {
+      return <ErrorMessage error={error} />;
     }
 
-    if (error) {
-      return (
-        <div>
-          <h2>Error</h2>
-          <div>{`${error}`}</div>
-        </div>
-      );
+    if (isLoading && !isLoaded) {
+      return <LoadingIndicator />;
     }
 
     return (
@@ -42,17 +43,14 @@ class ProductsPage extends Component {
 }
 
 const mapStateToProps = (storeState) => {
-  const { productList } = storeState;
-  const {
-    isLoading,
-    products,
-    error,
-  } = productList;
+  const productListState = getProductListState(storeState);
 
   return {
-    isLoading,
-    products,
-    error,
+    isLoading: isLoading(productListState),
+    isLoaded: isLoaded(productListState),
+    isError: isError(productListState),
+    products: getProducts(productListState),
+    error: getError(productListState),
   };
 };
 

@@ -1,9 +1,9 @@
 import { actions } from './actions';
 
 const initialState = {
-  products: [],
-  isLoading: false,
+  products: null,
   error: null,
+  isLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,9 +19,9 @@ const reducer = (state = initialState, action) => {
 
       return {
         ...state,
-        isLoading: false,
         products,
         error: null,
+        isLoading: false,
       };
     }
 
@@ -30,8 +30,8 @@ const reducer = (state = initialState, action) => {
 
       return {
         ...state,
-        isLoading: false,
         error,
+        isLoading: false,
       };
     }
 
@@ -41,3 +41,17 @@ const reducer = (state = initialState, action) => {
 };
 
 export default reducer;
+
+// - selectors - //
+
+export const getProductListState = (storeState) => storeState.productList;
+
+export const isLoading = (state) => state.isLoading;
+
+export const isLoaded = (state) => state.products !== null;
+
+export const isError = (state) => !!state.error;
+
+export const getProducts = (state) => state.products || [];
+
+export const getError = (state) => state.error;

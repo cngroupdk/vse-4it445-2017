@@ -12,7 +12,7 @@ export const productListFetch = () => ({
 export const productListSuccess = (products) => ({
   type: actions.PRODUCT_LIST_SUCCESS,
   products,
-})
+});
 
 export const productListFailure = (error) => ({
   type: actions.PRODUCT_LIST_FAILURE,
@@ -28,4 +28,4 @@ export const startProductListFetch = () => (dispatch, getStore, { api }) => {
   }).catch(error => {
     dispatch(productListFailure(error));
   });
-}
+};
