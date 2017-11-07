@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import api from '../api.js';
 import { ContactListItem } from '../components/ContactList/ContactListItem';
+import { ContactForm } from '../components/organisms/ContactForm';
 
 export class ContactPage extends Component {
   constructor(props) {
@@ -24,8 +25,24 @@ export class ContactPage extends Component {
     });
   }
 
+  onChange = (id, value) => {
+    console.log('----> onChange', id, value);
+  }
+
+  onSubmit = () => {
+    api.post(`/contact-reqest`, { email: "hello@world.com" }).then(res => {
+      const { message } = res.data;
+      console.log('/contact-reqest response message', message);
+    });
+  }
+
   render() {
     const { salesContacts, marketingContacts } = this.state;
+    const values = {
+      name: 'John Doe',
+      email: 'john@doe.com',
+      message: 'Hi, my name is Joe.'
+    };
 
     return (
       <div>
@@ -33,6 +50,13 @@ export class ContactPage extends Component {
           <h1>Contact</h1>
         </div>
         <div>
+          <h2>Contact Us</h2>
+          <ContactForm
+            values={values}
+            onChange={this.onChange}
+          />
+          <hr />
+          <h2>Contacts</h2>
           <h3>Sales</h3>
           {salesContacts.map(person => (
             <ContactListItem person={person} key={person.id} />
@@ -47,7 +71,6 @@ export class ContactPage extends Component {
         <div>
           <h3>Claims</h3>
         </div>
-        <p>Contact us.</p>
       </div>
     );
   }
