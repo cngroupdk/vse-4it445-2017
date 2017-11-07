@@ -8,6 +8,15 @@ export class Textarea extends Component {
     rows: PropTypes.number,
   };
 
+  onChange = (event) => {
+    const { id, onChange } = this.props;
+    const { value } = event.target;
+
+    if (!onChange) { return; }
+
+    onChange(id, value);
+  }
+
   render() {
     const {
       id,
@@ -23,8 +32,9 @@ export class Textarea extends Component {
         id={id}
         placeholder={placeholder}
         rows={rows || 5}
-        value={value}
+        value={value || ''}
         {...rest}
+        onChange={this.onChange}
       />
     );
   }

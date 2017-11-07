@@ -15,6 +15,7 @@ export class ContactForm extends Component {
     const {
       values,
       onChange,
+      onSubmit,
     } = this.props;
 
     const {
@@ -24,7 +25,7 @@ export class ContactForm extends Component {
     } = values;
 
     return (
-      <form>
+      <form onSubmit={onSubmit}>
         <Row>
           <div className="col-md-6">
             <InputWithLabel

@@ -8,6 +8,15 @@ export class Input extends Component {
     type: PropTypes.string,
   };
 
+  onChange = (event) => {
+    const { id, onChange } = this.props;
+    const { value } = event.target;
+
+    if (!onChange) { return; }
+
+    onChange(id, value);
+  }
+
   render() {
     const {
       id,
@@ -23,8 +32,9 @@ export class Input extends Component {
         className="form-control"
         id={id}
         placeholder={placeholder}
-        value={value}
+        value={value || ''}
         {...rest}
+        onChange={this.onChange}
       />
     );
   }

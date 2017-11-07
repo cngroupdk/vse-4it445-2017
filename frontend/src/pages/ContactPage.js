@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import api from '../api.js';
 import { ContactListItem } from '../components/ContactList/ContactListItem';
 import { ContactForm } from '../components/organisms/ContactForm';
+import {
+  fieldChange,
+  clearForm,
+  submitContactForm,
+} from '../components/ContactForm/actions';
+import {
+  getContactFormState,
+  getValues,
+  getMessage,
+} from '../components/ContactForm/reducer';
 
 export class ContactPage extends Component {
   constructor(props) {
@@ -26,23 +37,20 @@ export class ContactPage extends Component {
   }
 
   onChange = (id, value) => {
-    console.log('----> onChange', id, value);
+    const { fieldChange } = this.props;
+    fieldChange(id, value);
   }
 
-  onSubmit = () => {
-    api.post(`/contact-reqest`, { email: "hello@world.com" }).then(res => {
-      const { message } = res.data;
-      console.log('/contact-reqest response message', message);
-    });
+  onSubmit = (event) => {
+    event.preventDefault();
+
+    const { submitContactForm, values } = this.props;
+    submitContactForm(values);
   }
 
   render() {
     const { salesContacts, marketingContacts } = this.state;
-    const values = {
-      name: 'John Doe',
-      email: 'john@doe.com',
-      message: 'Hi, my name is Joe.'
-    };
+    const { values, contactFormMessage } = this.props;
 
     return (
       <div>
@@ -51,9 +59,14 @@ export class ContactPage extends Component {
         </div>
         <div>
           <h2>Contact Us</h2>
+          <pre>
+            {JSON.stringify(values, null, 2)}
+          </pre>
+          <p>{contactFormMessage}</p>
           <ContactForm
             values={values}
             onChange={this.onChange}
+            onSubmit={this.onSubmit}
           />
           <hr />
           <h2>Contacts</h2>
@@ -75,3 +88,21 @@ export class ContactPage extends Component {
     );
   }
 }
+
+const mapStateToProps = (storeState) => {
+  const contactForm = getContactFormState(storeState);
+
+  return {
+    values: getValues(contactForm),
+    contactFormMessage: getMessage(contactForm),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    fieldChange,
+    clearForm,
+    submitContactForm,
+  }
+)(ContactPage)
