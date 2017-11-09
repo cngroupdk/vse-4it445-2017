@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import api from '../api.js';
 import { ContactListItem } from '../components/ContactList/ContactListItem';
 import { ContactForm } from '../components/organisms/ContactForm';
+import {
+  formInputChange,
+  formReset,
+} from '../components/ContactForm/actions';
+import {
+  getContactFormState,
+  getValues,
+} from '../components/ContactForm/reducer';
+
 
 export class ContactPage extends Component {
   constructor(props) {
@@ -11,6 +21,11 @@ export class ContactPage extends Component {
     this.state = {
       salesContacts: [],
       marketingContacts: [],
+      values: {
+        name: 'John Doe',
+        email: 'john@doe.com',
+        message: 'Hi, my name is Joe.'
+      },
     };
   }
 
@@ -26,10 +41,26 @@ export class ContactPage extends Component {
   }
 
   onChange = (id, value) => {
-    console.log('----> onChange', id, value);
+    const { formInputChange } = this.props;
+    formInputChange(id, value);
+
+    this.setState(({ values }) => ({
+      values: {
+        ...values,
+        [id]: value,
+      }
+    }));
   }
 
-  onSubmit = () => {
+  onSubmit = (event) => {
+    event.preventDefault();
+
+    const { formReset } = this.props;
+
+    formReset();
+
+    console.log('ContactPage onSubmit');
+
     api.post(`/contact-reqest`, { email: "hello@world.com" }).then(res => {
       const { message } = res.data;
       console.log('/contact-reqest response message', message);
@@ -38,11 +69,7 @@ export class ContactPage extends Component {
 
   render() {
     const { salesContacts, marketingContacts } = this.state;
-    const values = {
-      name: 'John Doe',
-      email: 'john@doe.com',
-      message: 'Hi, my name is Joe.'
-    };
+    const { values } = this.props;
 
     return (
       <div>
@@ -51,9 +78,11 @@ export class ContactPage extends Component {
         </div>
         <div>
           <h2>Contact Us</h2>
+          <pre>{JSON.stringify(values, null, 2)}</pre>
           <ContactForm
             values={values}
             onChange={this.onChange}
+            onSubmit={this.onSubmit}
           />
           <hr />
           <h2>Contacts</h2>
@@ -75,3 +104,20 @@ export class ContactPage extends Component {
     );
   }
 }
+
+const mapStateToProps = (storeState) => {
+  const contactForm = getContactFormState(storeState);
+  const values = getValues(contactForm);
+
+  return {
+    values,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    formInputChange,
+    formReset,
+  }
+)(ContactPage);

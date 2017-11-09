@@ -8,6 +8,15 @@ export class Input extends Component {
     type: PropTypes.string,
   };
 
+  onChange = (event) => {
+    const { value } = event.target;
+    const { onChange, id } = this.props;
+
+    if (!onChange) { return; }
+
+    onChange(id, value);
+  }
+
   render() {
     const {
       id,
@@ -25,6 +34,7 @@ export class Input extends Component {
         placeholder={placeholder}
         value={value}
         {...rest}
+        onChange={this.onChange}
       />
     );
   }
