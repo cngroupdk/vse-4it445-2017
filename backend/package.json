@@ -5,6 +5,7 @@
   "main": "build/main.js",
   "scripts": {
     "dev": "backpack dev",
+    "dev:debug": "backpack dev --inspect --debug-brk",
     "start": "node ./build/main.js",
     "prestart": "run-s build",
     "build": "backpack build",
